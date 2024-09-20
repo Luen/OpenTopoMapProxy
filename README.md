@@ -1,4 +1,4 @@
 # OpenTopoMapProxy
 OpenTopoMap mirror proxy with nginx
 
-`docker compose up`
+`docker compose up -d`
