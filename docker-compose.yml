@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  opentopomap-proxy:
+    build: .
+    container_name: opentopomap-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./data/cache:/data/opentopomap_proxy/cache
+      - ./data/logs:/data/opentopomap_proxy/logs
