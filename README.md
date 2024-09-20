@@ -14,8 +14,8 @@ a. Client Request Handling
 
 - Incoming Requests: When a client requests a map tile (e.g., a specific zoom level and coordinates), the request is directed to your proxy server.
 - Cache Check: Nginx checks if the requested tile is already cached.
-- - Cache Hit: If the tile is in the cache and valid, Nginx serves it directly from the cache.
-- - Cache Miss: If not, Nginx forwards the request to the upstream servers to fetch the tile.
+  - Cache Hit: If the tile is in the cache and valid, Nginx serves it directly from the cache.
+  - Cache Miss: If not, Nginx forwards the request to the upstream servers to fetch the tile.
 
 b. Upstream Servers Configuration
 
@@ -92,8 +92,8 @@ Explanation:
 c. Cache Duration
 
 - Cached for 1 Month: Tiles are cached for 1 month (`1M` stands for one month in Nginx time units).
-- - Validity Period: For 1 month after a tile is cached, Nginx serves it from the cache without revalidating it with the upstream server.
-- - Expiration: After 1 month, the cached tile expires and Nginx fetches a fresh copy from the upstream server upon the next request.
+  - Validity Period: For 1 month after a tile is cached, Nginx serves it from the cache without revalidating it with the upstream server.
+  - Expiration: After 1 month, the cached tile expires and Nginx fetches a fresh copy from the upstream server upon the next request.
 - Inactive Cache Items: Tiles not accessed for 1 month are automatically removed from the cache due to the `inactive=1M` setting.
 
 ### 3. Detailed Flow of a Tile Request
@@ -168,24 +168,13 @@ Configuration Highlights:
 
 Suppose a user navigates a map in a web application:
 
-First Visit:
+First Visit: The proxy fetches tiles from the upstream servers. Tiles are served to the client but not cached yet.
 
-The proxy fetches tiles from the upstream servers.
-Tiles are served to the client but not cached yet.
+Repeated Navigation: As the user continues to navigate, tiles requested at least twice are cached. Subsequent users benefit from faster load times as cached tiles are served directly.
 
-Repeated Navigation:
+After 1 Month: Cached tiles expire. New requests for those tiles cause the proxy to fetch updated tiles from upstream servers.
 
-As the user continues to navigate, tiles requested at least twice are cached.
-Subsequent users benefit from faster load times as cached tiles are served directly.
-
-After 1 Month:
-
-Cached tiles expire.
-New requests for those tiles cause the proxy to fetch updated tiles from upstream servers.
-
-Unused Tiles:
-
-Tiles not accessed for over a month are purged from the cache to optimize storage.
+Unused Tiles: Tiles not accessed for over a month are purged from the cache to optimize storage.
 
 ### 8. Monitoring and Maintenance
 
