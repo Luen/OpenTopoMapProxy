@@ -89,7 +89,7 @@ Explanation:
 - `add_header Cache-Control public;`: Adds a Cache-Control header to responses, indicating that the content can be cached by any cache.
 - `add_header Access-Control-Allow-Origin *;`: Allows cross-origin requests, useful for web applications.
 - `expires 1M;`: Sets the Expires header to 1 month from the time of the response.
-- `proxy_cache_valid any 1M;`: Cached responses are considered valid for 1 month for any HTTP status code.
+- `proxy_cache_valid any 1M;`: Cached responses are considered valid for one month for any HTTP status code. This can be changed to 200 to cache only 200 ok status code responses. 
 
 c. Cache Duration
 
