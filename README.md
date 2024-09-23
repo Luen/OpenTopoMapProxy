@@ -1,8 +1,6 @@
 # OpenTopoMap Proxy
 
-This is a blazing-fast Nginx proxy that caches tiles for one month. The Nginx proxy acts as an intermediary between clients (such as web browsers or mapping applications) and the OpenTopoMap tile servers. It handles incoming requests for map tiles, caches them locally, and serves them to clients. This setup improves performance, reduces bandwidth usage, and decreases load on the upstream servers. It ensures that if a tile is accessed at least twice, it's served from Nginx's static file cache. In this case, a simple 100 GB cache can cover the entire world, as it only caches titles that people view somewhat frequently. Nginx is really good at this. If run on a separate computer, this doesn't need a lot of CPU or memory; it just needs a decent SSD drive.
-
-Credit: Found on this nginx config on [this issue](https://github.com/der-stefan/OpenTopoMap/issues/217#issuecomment-1443609452).
+This is a blazing-fast Nginx proxy that caches tiles for one month. The Nginx proxy acts as an intermediary between clients (such as web browsers or mapping applications) and the OpenTopoMap tile servers. It handles incoming requests for map tiles, caches them locally, and serves them to clients. This setup improves performance, reduces bandwidth usage, and decreases load on the upstream servers. It ensures that if a tile is accessed at least twice, it's served from Nginx's static file cache. In this case, a simple 100 GB cache can cover the entire world, as it only caches titles that people view somewhat frequently. Nginx is really good at this. If run on a separate computer, this doesn't need a lot of CPU or memory; it just needs a decent SSD drive. The nginx config was originally found on [this issue](https://github.com/der-stefan/OpenTopoMap/issues/217#issuecomment-1443609452).
 
 ## How to Run
 
