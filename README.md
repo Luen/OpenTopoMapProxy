@@ -1,6 +1,14 @@
 # OpenTopoMap Proxy
 
-This is a blazing-fast Nginx proxy that caches tiles for one month. The Nginx proxy acts as an intermediary between clients (such as web browsers or mapping applications) and the OpenTopoMap tile servers. It handles incoming requests for map tiles, caches them locally, and serves them to clients. This setup improves performance, reduces bandwidth usage, and decreases load on the upstream servers. It ensures that if a tile is accessed at least twice, it's served from Nginx's static file cache. In this case, a simple 100 GB cache can cover the entire world, as it only caches titles that people view somewhat frequently. Nginx is really good at this. If run on a separate computer, this doesn't need a lot of CPU or memory; it just needs a decent SSD drive. The nginx config was originally found on [this issue](https://github.com/der-stefan/OpenTopoMap/issues/217#issuecomment-1443609452).
+This is a blazing-fast Nginx proxy that caches tiles for one month. The Nginx proxy acts as an intermediary between clients (such as web browsers or mapping applications) and the OpenTopoMap tile servers. It handles incoming requests for map tiles, caches them locally, and serves them to clients. This setup improves performance, reduces bandwidth usage, and decreases load on the upstream servers. It ensures that if a tile is accessed at least twice, it's served from Nginx's static file cache. In this case, a simple 100 GB cache can cover the entire world, as it only caches titles that people view somewhat frequently. Nginx is really good at this. If run on a separate computer, this doesn't need a lot of CPU or memory; it just needs a decent SSD drive. The nginx config was originally found on [this thread](https://github.com/der-stefan/OpenTopoMap/issues/217#issuecomment-1443609452).
+
+## List of Proxies
+
+```text
+https://opentopomap.wanderstories.space/{z}/{x}/{y}.png
+https://opentopomap-proxy.maphub.net/{z}/{x}/{y}.png
+https://maps.refuges.info/otm/{z}/{x}/{y}.png
+```
 
 ## How to Run
 
@@ -72,7 +80,7 @@ location / {
     add_header Cache-Control public;
     add_header Access-Control-Allow-Origin *;
     expires 1M;
-    proxy_cache_valid any 1M;
+    proxy_cache_valid 200 1M;
     # ... other directives ...
 }
 ```
@@ -87,7 +95,7 @@ Explanation:
 - `add_header Cache-Control public;`: Adds a Cache-Control header to responses, indicating that the content can be cached by any cache.
 - `add_header Access-Control-Allow-Origin *;`: Allows cross-origin requests, useful for web applications.
 - `expires 1M;`: Sets the Expires header to 1 month from the time of the response.
-- `proxy_cache_valid any 1M;`: Cached responses are considered valid for one month for any HTTP status code. This can be changed to 200 to cache only 200 ok status code responses. 
+- `proxy_cache_valid 200 1M;`: Cached responses are considered valid for 1 month for 200 HTTP status code. This can be changed to any to cache all responses.
 
 c. Cache Duration
 
@@ -140,31 +148,9 @@ Cache Control: You have granular control over caching behavior, including cache 
 
 Disk Space Management: Monitor the cache directory to ensure it doesn't exceed the specified `max_size` or consume excessive disk space.
 
-Upstream Server Policies: Ensure compliance with OpenTopoMap's usage policies, especially regarding caching and bandwidth usage.
-
-Cache Invalidation: If tiles are updated upstream within the cache duration, clients may receive outdated tiles unless the cache is cleared manually.
-
 Security: Be cautious with headers `like Access-Control-Allow-Origin *`; while it allows flexibility, it may have security implications if not managed properly.
 
-### 6. Summary
-
-Proxy Functionality: Acts as an intermediary, caching and serving map tiles to improve performance and reduce upstream load.
-
-Caching Duration: Tiles are cached for 1 month, after which they expire and are refreshed upon the next request.
-
-Cache Mechanism:
-
-- `proxy_cache_min_uses 2;`: Ensures that only frequently requested tiles are cached.
-- `proxy_cache_valid any 1M;`: Sets the cache validity period.
-- `inactive=1M`: Removes tiles not accessed for 1 month.
-
-Configuration Highlights:
-
-- Load Balancing among upstream servers.
-- CORS Support via `Access-Control-Allow-Origin *`.
-- Client-Side Caching enabled through the `Expires` header.
-
-### 7. Example Scenario
+### 6. Example Scenario
 
 Suppose a user navigates a map in a web application:
 
@@ -176,9 +162,8 @@ After 1 Month: Cached tiles expire. New requests for those tiles cause the proxy
 
 Unused Tiles: Tiles not accessed for over a month are purged from the cache to optimize storage.
 
-### 8. Monitoring and Maintenance
+### 7. Monitoring and Maintenance
 
-- Logs: Regularly check Nginx access and error logs to monitor performance and troubleshoot issues.
-- Cache Size: Keep an eye on the cache size to prevent it from exceeding the `max_size` limit.
-- Updates: If the OpenTopoMap servers update their tiles frequently, consider adjusting the cache duration accordingly.
+- Logs: Periodically check Nginx access and error logs to monitor performance and troubleshoot issues.
+- Cache Size: Keep an eye on the cache size to prevent it from exceeding the `max_size` limit and adjust accordingly.
 - Security Updates: Ensure that the Nginx server and Docker image are kept up to date with the latest security patches.
