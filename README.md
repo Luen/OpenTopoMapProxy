@@ -90,7 +90,7 @@ Explanation:
 - `proxy_cache_key "$request_uri";`: Uses the request URI as the cache key.
 - `proxy_cache opentopomap_proxy_cache;`: Specifies which cache zone to use.
 - `proxy_cache_lock on;`: Ensures only one request at a time is allowed to populate a new cache item.
-- `proxy_cache_min_uses 2;`: Caches a response only after it has been requested at least twice.
+- `proxy_cache_min_uses 2;`: Caches a response only after it has been requested at least twice. Can change to `1`.
 - `proxy_ignore_headers Cache-Control expires;`: Ignores these headers from the upstream server to enforce proxy cache settings.
 - `add_header Cache-Control public;`: Adds a Cache-Control header to responses, indicating that the content can be cached by any cache.
 - `add_header Access-Control-Allow-Origin *;`: Allows cross-origin requests, useful for web applications.
@@ -110,7 +110,7 @@ Initial Request:
 
 - The client requests a tile for the first time.
 - Nginx checks the cache and doesn't find the tile (cache miss).
-- Since `proxy_cache_min_uses` is set to 2, Nginx doesn't cache this first response.
+- Since `proxy_cache_min_uses` is set to `2`, Nginx doesn't cache this first response. Can change to `1`.
 - Nginx forwards the request to an upstream server and serves the tile to the client.
 
 Subsequent Requests:
