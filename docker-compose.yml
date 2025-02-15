@@ -2,6 +2,7 @@ services:
   opentopomap-proxy:
     build: .
     container_name: opentopomap-proxy
+    restart: always
     ports:
       - "8070:80"
     volumes:
