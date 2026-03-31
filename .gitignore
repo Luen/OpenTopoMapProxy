@@ -1,2 +1,3 @@
 data/logs/nginx-error.log
 data/cache/*
+.vscode/settings.json
