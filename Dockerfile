@@ -1,4 +1,4 @@
-FROM nginx:1.29.3-alpine3.22-slim
+FROM nginx:1.31.2-alpine3.23-slim
 
 RUN rm /etc/nginx/nginx.conf
 
