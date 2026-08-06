@@ -1,0 +1,24 @@
+# Git / VCS
+.git
+.gitignore
+.gitattributes
+
+# IDE / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Runtime data (bind-mounted in compose)
+data
+**/cache
+**/logs
+
+# Docker / docs
+docker-compose*.yml
+compose*.yml
+Dockerfile*
+.dockerignore
+README.md
+LICENSE
+*.md
