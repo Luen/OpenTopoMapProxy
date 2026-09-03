@@ -10,10 +10,10 @@ Treat this file as **living documentation**. Update it in the same PR when the s
 
 | Branch | Role |
 | --- | --- |
-| `develop` | Default branch for features and improvements |
+| `dev` | Default branch for features and improvements |
 | `main` | Production. Safe dependency bumps and releases land here |
 
-- Open feature/fix PRs against **`develop`**.
+- Open feature/fix PRs against **`dev`**.
 - Promote to **`main`** when ready for production.
 - Do not use `master` (rename to `main` if any remnant remains).
 
@@ -22,7 +22,7 @@ Treat this file as **living documentation**. Update it in the same PR when the s
 ### Tier C - Branches + agent docs
 
 - No nightly Docker dependency-release workflow in this rollout.
-- Use `develop` for features and `main` for production when applicable.
+- Use `dev` for features and `main` for production when applicable.
 
 ## Pull requests
 
