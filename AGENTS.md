@@ -21,7 +21,7 @@ Treat this file as **living documentation**. Update it in the same PR when the s
 
 ### Tier C - Branches + agent docs
 
-- No nightly Docker dependency-release workflow in this rollout.
+- No nightly Docker dependency-release workflow in this PR.
 - Use `dev` for features and `main` for production when applicable.
 
 ## Pull requests
