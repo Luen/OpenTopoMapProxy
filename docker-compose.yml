@@ -1,5 +1,7 @@
 services:
   opentopomap-proxy:
+    # Prefer GHCR on servers (Watchtower). Local: docker compose up --build
+    image: ghcr.io/luen/opentopomapproxy:latest
     build: .
     container_name: opentopomap-proxy
     restart: always
